@@ -1,8 +1,26 @@
 # auxiliary-goose
-Additional story-providers for Goosepaper that require nonstandard imports
+
+A home for additional story-providers for [Goosepaper](https://github.com/j6k4m8/goosepaper) that require nonstandard imports
 
 
-StoryProviders may incubate here before making their way to the main repo, if I (BDFL) decide that they ought to be moved.
+StoryProviders may incubate here before making their way to the main repo, if I (BDFL) decide that they ought to be moved. If you have a story provider that requires new or nonstandard imports, it's more likely to be merged in here than the main repo.
+
+## Usage
+
+You can use `auxiliarygoose` story providers alongside standardlib story providers. For example:
+
+```python
+from goosepaper import Goosepaper
+from goosepaper.rss import RSSFeedStoryProvider
+# nonstandard story provider:
+from auxiliarygoose import Ao3StoryProvider
+
+Goosepaper([
+  RSSFeedStoryProvider("..."),
+  Ao3StoryProvider(search="Bob Belcher")
+]).to_pdf("my-goosepaper.pdf")
+```
+
 
 ## Story Providers
 
