@@ -16,7 +16,8 @@ class Ao3StoryProvider(StoryProvider):
         max_word_count: int = None, 
         author: str = None, 
         title: str = None, 
-        search: str = None
+        search: str = None,
+        fandom: str = None
     ):
         """
         You can pass any set of filtering criteria to get the set intersect.
@@ -60,6 +61,8 @@ class Ao3StoryProvider(StoryProvider):
             qry['title'] = self.title
         if self.search:
             qry['any_field'] = self.search
+        if self.fandom:
+            qry['fandoms'] = self.fandom
         
         search_results = AO3.Search(**qry)
         search_results.update()
