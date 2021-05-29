@@ -481,5 +481,6 @@ class NPRStoryProvider(RSSFeedStoryProvider):
                 break
         else:
             raise ValueError(
-                f"Could not find a NPR feed with the title '{feed_title}'."
+                f"Could not find a NPR feed with the title '{feed_title}'.\n"
+                "Try searching for a category here: https://legacy.npr.org/api/mappingCodes.php"
             )
