@@ -25,5 +25,6 @@ Goosepaper([
 | Story Provider            | Description                                                                                                                      | Why is it not in the standard library?       |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
 | `Ao3StoryProvider`        | Archive of our Own fanfiction                                                                                                    | `AO3` special import (`pip install ao3_api`) |
+| `YrStoryProvider`        | Secondary weather StoryProvider using the yr.no API provided by the Norwegian Metereological Institute  						   | `metno-locationforecast` special import (`pip install metno-locationforecast`) |
 | `HackerNewsStoryProvider` | Downloaded articles linked from HackerNews                                                                                       | Hacker News is bad                           |
 | `NPRStoryProvider`        | Downloaded articles from NPR by category. See [here](https://legacy.npr.org/api/mappingCodes.php) for a full list of categories. |
