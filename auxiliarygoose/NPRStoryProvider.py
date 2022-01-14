@@ -1,4 +1,4 @@
-from goosepaper.rss import RSSFeedStoryProvider
+from goosepaper.storyprovider.rss import RSSFeedStoryProvider
 
 _LOOKUP = [
     {"title": "Africa", "code": 1126, "description": "Africa"},

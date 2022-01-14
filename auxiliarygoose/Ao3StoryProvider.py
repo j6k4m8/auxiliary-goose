@@ -1,4 +1,4 @@
-from goosepaper.storyprovider import StoryProvider
+from goosepaper.storyprovider.storyprovider import StoryProvider
 from goosepaper.story import Story
 import AO3
 
@@ -38,6 +38,7 @@ class Ao3StoryProvider(StoryProvider):
         self.author = author
         self.title = title
         self.search = search
+        self.fandom = fandom
 
     def get_stories(self, limit: int = 1):
         """
