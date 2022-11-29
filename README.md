@@ -23,9 +23,11 @@ Goosepaper([
 ## Story Providers
 
 | Story Provider            | Description                                                                    | Why is it not in the standard library?                                         |
-| ------------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+|---------------------------|--------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
 | `Ao3StoryProvider`        | Archive of our Own fanfiction                                                  | `AO3` special import (`pip install ao3_api`)                                   |
 | `YrStoryProvider`         | Weather using the yr.no API provided by the Norwegian Metereological Institute | `metno-locationforecast` special import (`pip install metno-locationforecast`) |
 | `HackerNewsStoryProvider` | Download articles linked from HackerNews                                       | Hacker News is bad                                                             |
 | `NPRStoryProvider`        | Download articles from NPR by category.                                        | Brittle HTML-parsing                                                           |
 | `NYTNewsletterProvider`   | Newsletters from the New York Times.                                           | Brittle HTML-parsing                                                           |
+| MinifluxStoryProvider     | Download articles from your Miniflux feed                                      | Miniflux special import (pip install miniflux)                                 |
+
