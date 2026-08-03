@@ -4,6 +4,14 @@ A home for additional story-providers for [Goosepaper](https://github.com/j6k4m8
 
 StoryProviders may incubate here before making their way to the main repo, if I (BDFL) decide that they ought to be moved. If you have a story provider that requires new or nonstandard imports, it's more likely to be merged in here than the main repo.
 
+## Installation
+
+Install the package with all optional provider dependencies:
+
+```sh
+uv add "auxiliarygoose[all]"
+```
+
 ## Usage
 
 You can use `auxiliarygoose` story providers alongside standardlib story providers. For example:
@@ -30,4 +38,3 @@ Goosepaper([
 | `NPRStoryProvider`        | Download articles from NPR by category.                                        | Brittle HTML-parsing                                                           |
 | `NYTNewsletterProvider`   | Newsletters from the New York Times.                                           | Brittle HTML-parsing                                                           |
 | MinifluxStoryProvider     | Download articles from your Miniflux feed                                      | Miniflux special import (pip install miniflux)                                 |
-

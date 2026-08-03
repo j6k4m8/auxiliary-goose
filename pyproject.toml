@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "auxiliarygoose"
+version = "0.1.0"
+description = "Additional story providers for Goosepaper"
+readme = "README.md"
+requires-python = ">=3.8"
+license = "Apache-2.0"
+dependencies = []
+
+[project.optional-dependencies]
+ao3 = ["ao3-api"]
+miniflux = ["miniflux"]
+nyt = [
+    "beautifulsoup4",
+    "requests",
+]
+weather = [
+    "metno-locationforecast",
+    "requests",
+]
+all = [
+    "ao3-api",
+    "beautifulsoup4",
+    "metno-locationforecast",
+    "miniflux",
+    "requests",
+]
