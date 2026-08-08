@@ -40,17 +40,19 @@ class Ao3StoryProvider(StoryProvider):
         self.search = search
         self.fandom = fandom
 
-    def get_stories(self, limit: int = 1):
+    def get_stories(self, limit: int = None):
         """
         Get a list of stories from AO3.
 
         Arguments:
-            limit (int: 1): The maximum number of stories to return
+            limit (int: None): The maximum number of stories to return.
+                Defaults to the `limit` passed at construction.
 
         Returns:
             List[Story]
 
         """
+        limit = self.limit if limit is None else limit
         qry = {}
         if self.max_word_count:
             qry["word_count"] = AO3.utils.Constraint(upperbound=self.max_word_count)
@@ -63,27 +65,29 @@ class Ao3StoryProvider(StoryProvider):
         if self.fandom:
             qry["fandoms"] = self.fandom
 
-        search_results = AO3.Search(**qry)
-        search_results.update()
-        works = search_results.results
+        try:
+            search_results = AO3.Search(**qry)
+            search_results.update()
+            works = search_results.results
+        except Exception as e:
+            # AO3 rate-limits by IP; when throttled it returns a page the client
+            # can't parse. Degrade to "no AO3 stories today" instead of raising
+            # and taking down the whole paper build.
+            print(f"AO3: search failed, skipping (rate-limited?) ({type(e).__name__}: {e})")
+            return []
+
         stories = []
         for work in works:
             try:
                 work.reload()
-                stories.append(
-                    Story(
-                        headline=work.title,
-                        body_html=(
-                            '<body><div class="meta">'
-                            + work.download("html")
-                            .decode("utf-8")
-                            .split('<div class="meta">')[1]
-                        ),
-                    )
-                )
+                html = work.download("html").decode("utf-8")
+                # Keep from the metadata block on when present; otherwise fall
+                # back to the whole document rather than dropping the work.
+                parts = html.split('<div class="meta">')
+                body = '<div class="meta">' + parts[1] if len(parts) > 1 else html
+                stories.append(Story(headline=work.title, body_html="<body>" + body))
             except Exception as e:
-                print(e)
-                pass
+                print(f"AO3: skipping a work ({type(e).__name__}: {e})")
             if len(stories) >= limit:
                 break
         return stories

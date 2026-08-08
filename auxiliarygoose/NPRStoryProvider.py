@@ -472,15 +472,19 @@ _LOOKUP = [
 
 
 class NPRStoryProvider(RSSFeedStoryProvider):
-    def __init__(self, feed_title: str, limit: int = 5, parallel: bool = True) -> None:
-        self.limit = limit
-        self._parallel = parallel
+    def __init__(self, feed_title: str, limit: int = 5, parallel: bool = True, **kwargs) -> None:
         for category in _LOOKUP:
             if feed_title == category["title"]:
-                self.feed_url = f"https://feeds.npr.org/{category['code']}/rss.xml"
+                feed_url = f"https://feeds.npr.org/{category['code']}/rss.xml"
                 break
         else:
             raise ValueError(
                 f"Could not find a NPR feed with the title '{feed_title}'.\n"
                 "Try searching for a category here: https://legacy.npr.org/api/mappingCodes.php"
             )
+        # Delegate to RSSFeedStoryProvider so byline/body_source/_since etc. are
+        # all initialized — hand-setting only limit/feed_url left _since unset and
+        # crashed get_stories(). Extra kwargs (since_days_ago, byline, body_source)
+        # pass straight through.
+        super().__init__(feed_url, limit=limit, **kwargs)
+        self._parallel = parallel
