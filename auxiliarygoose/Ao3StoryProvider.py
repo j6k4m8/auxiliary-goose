@@ -65,10 +65,19 @@ class Ao3StoryProvider(StoryProvider):
         if self.fandom:
             qry["fandoms"] = self.fandom
 
-        search_results = AO3.Search(**qry)
-        search_results.update()
+        try:
+            search_results = AO3.Search(**qry)
+            search_results.update()
+            works = search_results.results
+        except Exception as e:
+            # AO3 rate-limits by IP; when throttled it returns a page the client
+            # can't parse. Degrade to "no AO3 stories today" instead of raising
+            # and taking down the whole paper build.
+            print(f"AO3: search failed, skipping (rate-limited?) ({type(e).__name__}: {e})")
+            return []
+
         stories = []
-        for work in search_results.results:
+        for work in works:
             try:
                 work.reload()
                 html = work.download("html").decode("utf-8")
