@@ -147,9 +147,10 @@ class YrStoryProvider(StoryProvider):
         self.wind = self.get_wind(12)
 
         headline = f"<h2 width=80%>The Weather.</h2>"
+        # (Dropped the old metaweather.com icon — that service shut down in 2022,
+        # so the <img> was a guaranteed broken link in the rendered paper.)
         body_html = f"""<span style='font-size:12px;'>Delivered by Met Norway, <a href='http://yr.no'>yr.no</a></span><br>
         {self.tom[0]}{self.tempMark()} with {str(self.get_weather_state())} in {self.location.name}<br>
-        <img src="https://www.metaweather.com/static/img/weather/png/64/{self.get_weather_img()}.png" width="5px" /><br>
         {self.tom[2]} – {self.tom[1]}{self.tempMark()}, Winds from {self.get_wind_direction(12)} at {self.wind[0]}{self.wind[1]}.
         """
 
